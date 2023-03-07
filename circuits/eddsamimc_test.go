@@ -2,6 +2,10 @@ package circuits
 
 import (
 	crand "crypto/rand"
+	"math/big"
+	"math/rand"
+	"testing"
+
 	"github.com/consensys/gnark-crypto/ecc"
 	twistededwards2 "github.com/consensys/gnark-crypto/ecc/twistededwards"
 	"github.com/consensys/gnark-crypto/signature/eddsa"
@@ -11,9 +15,6 @@ import (
 	eddsa2 "github.com/consensys/gnark/std/signature/eddsa"
 	"github.com/consensys/gnark/test"
 	"github.com/liyue201/gnark-circomlib/utils/mimc7"
-	"math/big"
-	"math/rand"
-	"testing"
 )
 
 type circuitEddsaMimc struct {
@@ -30,14 +31,14 @@ func (t *circuitEddsaMimc) Define(api frontend.API) error {
 func TestEdDSAMiMCVerifier(t *testing.T) {
 	assert := test.NewAssert(t)
 
-	snarkCurve, _ := twistededwards.GetSnarkCurve(twistededwards2.BN254)
+	snarkField, _ := twistededwards.GetSnarkField(twistededwards2.BN254)
 
 	// generate parameters for the signatures
 	privKey, _ := eddsa.New(twistededwards2.BN254, crand.Reader)
 
 	// pick a message to sign
 	var msg big.Int
-	msg.Rand(rand.New(rand.NewSource(0)), snarkCurve.Info().Fr.Modulus())
+	msg.Rand(rand.New(rand.NewSource(0)), snarkField)
 
 	t.Log("msg to sign", msg.String())
 	msgData := msg.Bytes()
@@ -63,8 +64,8 @@ func TestEdDSAMiMCVerifier(t *testing.T) {
 
 	var witness circuitEddsaMimc
 	witness.Message = msg
-	witness.PublicKey.Assign(snarkCurve, pubKey.Bytes())
-	witness.Signature.Assign(snarkCurve, signature)
+	witness.PublicKey.Assign(twistededwards2.BN254, pubKey.Bytes())
+	witness.Signature.Assign(twistededwards2.BN254, signature)
 
 	assert.ProverSucceeded(&circuit, &witness, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 

@@ -2,8 +2,9 @@ package circuits
 
 import (
 	"fmt"
-	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"testing"
+
+	"github.com/consensys/gnark/frontend/cs/r1cs"
 
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend"
@@ -33,7 +34,7 @@ func Test_Num2Bits(t *testing.T) {
 		Bits: [8]frontend.Variable{1, 0, 0, 1, 0, 0, 0, 0},
 	}, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	fmt.Printf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }
@@ -68,7 +69,7 @@ func Test_Num2BitsStrict(t *testing.T) {
 
 	assert.ProverSucceeded(&circuit, validAssignment, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	fmt.Printf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }
@@ -93,7 +94,7 @@ func Test_Bits2Num(t *testing.T) {
 		Bits: [4]frontend.Variable{1, 0, 0, 1},
 	}, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	fmt.Printf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }
@@ -125,7 +126,7 @@ func Test_Bits2NumStrict(t *testing.T) {
 
 	assert.ProverSucceeded(&circuit, validAssignment, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	fmt.Printf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }
@@ -152,7 +153,7 @@ func Test_Num2BitsNeg(t *testing.T) {
 		Bits: [8]frontend.Variable{0, 1, 1, 0, 0, 1, 1, 1},
 	}, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	fmt.Printf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }

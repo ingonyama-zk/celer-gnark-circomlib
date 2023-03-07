@@ -2,13 +2,14 @@ package circuits
 
 import (
 	"fmt"
+	"math/big"
+	"testing"
+
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/consensys/gnark/test"
-	"math/big"
-	"testing"
 )
 
 type circuitCompConstant struct {
@@ -35,7 +36,7 @@ func TestCompConstant(t *testing.T) {
 		A: 1000,
 	}, test.WithCurves(ecc.BN254), test.WithBackends(backend.PLONK))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	fmt.Printf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }

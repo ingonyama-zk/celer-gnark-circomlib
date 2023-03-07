@@ -1,15 +1,15 @@
-
 package circuits
 
 import (
 	"fmt"
+	"math/big"
+	"testing"
+
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/consensys/gnark/test"
-	"math/big"
-	"testing"
 )
 
 type circuitIsEqual struct {
@@ -18,7 +18,7 @@ type circuitIsEqual struct {
 }
 
 func (t *circuitIsEqual) Define(api frontend.API) error {
-	q := api.Compiler().Curve().Info().Fr.Modulus()
+	q := api.Compiler().Field()
 	fmt.Printf("%s\n", q.String())
 
 	q.Sub(q, big.NewInt(1))
@@ -40,8 +40,7 @@ func TestIsEqual(t *testing.T) {
 		B: 123,
 	}, test.WithCurves(ecc.BN254), test.WithBackends(backend.PLONK))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	fmt.Printf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }
-

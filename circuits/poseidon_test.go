@@ -1,14 +1,15 @@
 package circuits
 
 import (
+	"math/big"
+	"testing"
+
 	"github.com/consensys/gnark-crypto/ecc"
 	"github.com/consensys/gnark/backend"
 	"github.com/consensys/gnark/frontend"
 	"github.com/consensys/gnark/frontend/cs/r1cs"
 	"github.com/consensys/gnark/test"
 	"github.com/iden3/go-iden3-crypto/poseidon"
-	"math/big"
-	"testing"
 )
 
 type circuitPoseidon struct {
@@ -39,7 +40,7 @@ func TestPoseidon(t *testing.T) {
 		Hash: h,
 	}, test.WithCurves(ecc.BN254), test.WithBackends(backend.GROTH16))
 
-	_r1cs, _ := frontend.Compile(ecc.BN254, r1cs.NewBuilder, &circuit)
+	_r1cs, _ := frontend.Compile(ecc.BN254.ScalarField(), r1cs.NewBuilder, &circuit)
 	internal, secret, public := _r1cs.GetNbVariables()
 	t.Logf("public, secret, internal %v, %v, %v\n", public, secret, internal)
 }
