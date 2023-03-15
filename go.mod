@@ -3,8 +3,8 @@ module github.com/liyue201/gnark-circomlib
 go 1.19
 
 require (
-	github.com/consensys/gnark v0.8.0
-	github.com/consensys/gnark-crypto v0.9.1
+	github.com/consensys/gnark v0.0.0-20230315015730-8699eba5710d
+	github.com/consensys/gnark-crypto v0.9.2-0.20230222154459-49b5c6cfd875
 	github.com/iden3/go-iden3-crypto v0.0.13
 	github.com/minya-konka/pedersen v0.0.0-20221228123429-151d98c6740c
 )
@@ -24,7 +24,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/rs/zerolog v1.29.0 // indirect
-	github.com/stretchr/testify v1.8.1 // indirect
+	github.com/stretchr/testify v1.8.2 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
