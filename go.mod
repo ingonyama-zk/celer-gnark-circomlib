@@ -17,8 +17,8 @@ require (
 	github.com/dchest/blake256 v1.1.0 // indirect
 	github.com/dchest/blake512 v1.0.0 // indirect
 	github.com/fxamacker/cbor/v2 v2.4.0 // indirect
-	github.com/google/pprof v0.0.0-20230207041349-798e818bf904 // indirect
-	github.com/ingonyama-zk/icicle/goicicle v0.0.0 //indirect
+	github.com/google/pprof v0.0.0-20230309165930-d61513b1440d // indirect
+	github.com/ingonyama-zk/icicle v0.0.0-20230719184412-d13143506ece // indirect
 	github.com/kr/text v0.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
@@ -34,7 +34,4 @@ require (
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
 
-replace (
-	github.com/consensys/gnark => ../celer-gnark
-	github.com/ingonyama-zk/icicle/goicicle => ../icicle/goicicle
-)
+replace github.com/consensys/gnark => github.com/ingonyama-zk/celer-gnark v0.0.0-20230719185033-49f6942d2236
